@@ -1,27 +1,52 @@
 <?php
-
+/**
+ * MovieDB
+ * 
+ **/
 class movieDB{
-    const $apiKey = '2eab928b55530289454f69fe5a2f51a4';
+    private $apiKey = '2eab928b55530289454f69fe5a2f51a4';
     
-    private function makeCall($url, $args = NULL){
-        
+    /**
+     * _call
+     * @string url
+     * @array arguments
+     * @todo use http query builder
+     **/
+    private function _call($url, $args = NULL){
+        $args['api_key'] = $this->apiKey;
+        $ch = curl_init();
+        $url .= '?';
+        foreach($args as $a => $b){
+            $url .= $a.'='.urlencode($b).'&';
+        }
+        echo $url;
+        curl_setopt($ch, CURLOPT_URL, "http://api.themoviedb.org/3".$url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept: application/json"));
+        $response = curl_exec($ch);
+        curl_close($ch);
+        echo "<pre>";
+        print_r(json_decode($response));
+        echo "</pre>";
+        return $response;
     }
     
     public function getMovies($personId){
-        // /3/person/{id}/credits
+        // /person/{id}/credits
         $id = $personId;
-        $url = '/3/person/'.$id.'/credits';
-        $response = $this->makeCall($url);
-        return json_encode($response);
+        $url = '/person/'.$id.'/credits';
+        $response = $this->_call($url);
+        return json_decode($response);
     }
     
     public function searchPerson($person){
-        // /3/search/person
+        // /search/person
         $query = $person;
-        $url = '/3/search/person';
+        $url = '/search/person';
         $args = array('query'=>$query);
-        $response = $this->makeCall($url);
-        return json_encode($response);
+        $response = $this->_call($url, $args);
+        return json_decode($response);
     }
     
     public function queryPersonMovies($person){
@@ -31,7 +56,5 @@ class movieDB{
         $movies = $this->getMovies($personId);
         return $movies;
     }
-    
-    
 }
 ?>
