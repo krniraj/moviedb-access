@@ -7,7 +7,7 @@ $movieDB = new movieDB;
 if($command == 'actor'){
     $actor = $request['actor']; 
     $movies = $movieDB->queryPersonMovies($actor);
-    $movieList = $movies['results'];
+    $movieList = $movies['cast'];
     $dates = array();
     foreach($movieList as $mov){
         array_push($dates, strtotime($mov['release_date']));

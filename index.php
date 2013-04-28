@@ -19,16 +19,16 @@
 </div>
 <div class="row">
     <div class="span4 offset4">
-        <form class="form-search">
-            <input type="search" class="input-medium search-query"><input type="submit" class="btn" value="search">
+        <form class="form-search" data-bind="submit: getMovies">
+            <input type="search" class="input-medium search-query" data-bind="value: person"><input type="submit" class="btn" value="search">
         </form>
     </div>
 </div>
 <div class="row">
     <div class="span4 offset4">
-        <ul data-bind="">
-            <li><a href="#"><img src=""></a> <h3>Movie Name</h3>
-            Starring: <span class="stars">Someone</span>
+        <ul data-bind="foreach: {data: movies, as: 'movie}">
+            <li><a href="#" data-bind="attr:{href: movie.movieUrl}"><img src="" data-bind="attr: {src: movie.poster}"></a> <h3 data-bind="text: movie.title"></h3>
+            Starring: <span class="stars" data-bind="text: movie.character"></span>
             </li>
         </ul>
     </div>
