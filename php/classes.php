@@ -52,7 +52,7 @@ class movieDB{
     public function queryPersonMovies($person){
         $query = $person;
         $personInfo = $this->searchPerson($query);
-        $personId = $personInfo['id'];
+        $personId = $personInfo['result'][0]['id'];
         $movies = $this->getMovies($personId);
         return $movies;
     }

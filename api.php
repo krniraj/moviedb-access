@@ -5,10 +5,15 @@ $request = $_GET;
 $command = $request['cmd'];
 $movieDB = new movieDB;
 if($command == 'actor'){
-    $actor = urlencode($request['actor']);  
-}
-elseif($command == 'movie'){
-    $movie = urlencode($request['movie']);
+    $actor = $request['actor']; 
+    $movies = $movieDB->queryPersonMovies($actor);
+    $movieList = $movies['results'];
+    $dates = array();
+    foreach($movieList as $mov){
+        array_push($dates, strtotime($mov['release_date']));
+    }
+    array_multisort($dates, SORT_DESC, $movieList);
+    echo json_encode($movieList);
 }
 
 
