@@ -33,14 +33,5 @@
         </ul>
     </div>
 </div>
-<?php 
-
-//test 
-include('php/classes.php');
-$search = new MovieDB;
-$search->searchPerson('Brad Pitt');
-
-
-?>
-    </body>
+</body>
 </html>
