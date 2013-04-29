@@ -53,5 +53,10 @@
 		<a href="#" data-bind="click: showMovies, text: showMore">Show more</a>
     </div>
 </div>
+<div class="row">
+	<div class="large-8 large-offset-2 columns">
+	Application created by <a href="http://antjanus.com">AntJanus</a>. Check out the source code on <a href="https://github.com/AntJanus/moviedb-access">Github</a>.
+	</div>
+</div>
 </body>
 </html>
