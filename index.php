@@ -55,6 +55,8 @@
 </div>
 <div class="row">
 	<div class="large-8 large-offset-2 columns">
+	
+<hr />
 	Application created by <a href="http://antjanus.com">AntJanus</a>. Check out the source code on <a href="https://github.com/AntJanus/moviedb-access">Github</a>.
 	</div>
 </div>

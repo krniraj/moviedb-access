@@ -47,8 +47,8 @@ function movieViewModel(){
 		return new movie(item)});
         self.movies(mappedMovies);
 		self.actor(data.name);
-		if(self.actor().toLowerCase != self.person().toLowerCase){
-			self.notification('Did you mean -'+self.actor()+'?');
+		if(self.actor().toLowerCase() != self.person().toLowerCase()){
+			self.notification('Did you mean - '+self.actor()+'?');
 		}
 		else{
 		self.alert('hide');
