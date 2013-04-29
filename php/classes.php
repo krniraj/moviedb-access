@@ -19,16 +19,12 @@ class movieDB{
         foreach($args as $a => $b){
             $url .= $a.'='.urlencode($b).'&';
         }
-        echo $url;
         curl_setopt($ch, CURLOPT_URL, "http://api.themoviedb.org/3".$url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept: application/json"));
         $response = curl_exec($ch);
         curl_close($ch);
-        echo "<pre>";
-        print_r(json_decode($response));
-        echo "</pre>";
         return $response;
     }
     
@@ -37,7 +33,7 @@ class movieDB{
         $id = $personId;
         $url = '/person/'.$id.'/credits';
         $response = $this->_call($url);
-        return json_decode($response);
+        return json_decode($response,true);
     }
     
     public function searchPerson($person){
@@ -46,14 +42,15 @@ class movieDB{
         $url = '/search/person';
         $args = array('query'=>$query);
         $response = $this->_call($url, $args);
-        return json_decode($response);
+        return json_decode($response, true);
     }
     
     public function queryPersonMovies($person){
         $query = $person;
         $personInfo = $this->searchPerson($query);
-        $personId = $personInfo['result'][0]['id'];
+        $personId = $personInfo['results'][0]['id'];
         $movies = $this->getMovies($personId);
+		$movies['name'] = $personInfo['results'][0]['name'];
         return $movies;
     }
 }

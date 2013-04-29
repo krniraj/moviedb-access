@@ -6,31 +6,51 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/foundation.css">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/foundation.css">
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/knockout.js"></script>
+		<script type="text/javascript" src="js/koviews.js"></script>
     </head>
     <body>
 <div class="row">
-    <div class="span6 offset3">
-    Movie DB Access
+    <div class="large-8 columns large-offset-2 text-center">
+		<h1>Movie DB Access</h1>
+		<h2 class="subheader">Movies by <span data-bind="text: actor">Actors</span></h2>
     </div>
 </div>
 <div class="row">
-    <div class="span4 offset4">
+    <div class="large-8 large-offset-2 columns">
         <form class="form-search" data-bind="submit: getMovies">
-            <input type="search" class="input-medium search-query" data-bind="value: person"><input type="submit" class="btn" value="search">
+			<div class="row collapse">
+			<div class="small-9 columns">
+            <input type="search" placeholder="Actor Name" data-bind="value: person">
+			</div>
+			<div class="small-3 columns">
+			<input type="submit" class="button postfix" value="search">
+			</div>
+			</div>
+		<div data-alert class="hide" data-bind="attr: {class: alert}, text: notification">
+		
+		<a href+"#" class="close">&times;</a>
+		</div>
         </form>
+
     </div>
 </div>
 <div class="row">
-    <div class="span4 offset4">
-        <ul data-bind="foreach: {data: movies, as: 'movie}">
-            <li><a href="#" data-bind="attr:{href: movie.movieUrl}"><img src="" data-bind="attr: {src: movie.poster}"></a> <h3 data-bind="text: movie.title"></h3>
-            Starring: <span class="stars" data-bind="text: movie.character"></span>
-            </li>
-        </ul>
+    <div class="large-8 large-offset-2 columns">
+        <div data-bind="foreach: {data: movies, as: 'movie'}">
+		<!-- ko if: movie.visible() == true -->
+            <div class="panel"><a href="#" data-bind="attr:{href: movie.movieUrl}"> <h3 data-bind="text: movie.title"></h3></a>
+			<ul class="no-bullet">
+			<li><strong>Release Date:</strong> <span data-bind="text: movie.date"></span></li>
+			<li><strong>Character Role:</strong> <span data-bind="text: movie.character"></span></li>
+			</ul>
+            </div>
+        <!-- /ko -->
+		</div>
+		<a href="#" data-bind="click: showMovies, text: showMore">Show more</a>
     </div>
 </div>
 </body>
